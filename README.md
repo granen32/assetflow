@@ -22,6 +22,8 @@ assetflow/
 ```
 
 ## 준비물
+
+공개 저장소로 올리기 전에는 [공개 준비 안내](docs/public-release.md)에 따라 현재 파일과 Git 이력을 검사합니다. 기존 원격 저장소를 재생성해도 로컬 이력은 남습니다.
 - JDK 21
 - Gradle 전역 설치 불필요 (프로젝트의 Gradle Wrapper 사용)
 - Node.js 20.9+ (권장: 22 LTS 이상)
@@ -51,7 +53,7 @@ npm run dev
 
 브라우저에서 `http://localhost:3000` 접속. Next.js가 `/api/*`를 `http://localhost:8080/api/*`로 프록시합니다.
 
-새 터미널에서 `java -version`이 Java 21로 표시되는지 확인합니다. 현재 PC에는 사용자 공용 `C:\Users\권규형\.jdks\corretto-21.0.13_0`를 JAVA_HOME과 사용자 PATH에 등록했습니다. 기존 앱에서 새 터미널을 열어도 반영되지 않으면 터미널 앱 또는 Codex를 완전히 종료한 뒤 다시 실행합니다.
+새 터미널에서 `java -version`이 Java 21로 표시되는지 확인합니다. JDK 21의 설치 폴더를 JAVA_HOME에, 그 하위 bin 폴더를 사용자 PATH에 등록합니다. 기존 앱에서 새 터미널을 열어도 반영되지 않으면 터미널 앱 또는 Codex를 완전히 종료한 뒤 다시 실행합니다.
 
 JWT_SECRET은 최소 32바이트가 필요합니다. `.env.example`을 복사하는 것만으로 Spring Boot에 적용되지는 않습니다. 같은 키를 유지하면 서버 재시작 후에도 만료 전 토큰을 검증할 수 있습니다. HTTPS 환경에서는 `AUTH_COOKIE_SECURE=true`를 설정합니다.
 
@@ -95,4 +97,5 @@ cd frontend && npm run typecheck && npm run lint && npm run build
 
 ## 다음 단계
 거래 내역 Entity 및 API → 실제 잔액 집계 → PostgreSQL 통합 테스트 → CI/CD 순으로 확장합니다. 현재 계약은 [docs/api-contract.md](docs/api-contract.md), 실행 근거와 미검증 항목은 [docs/verification.md](docs/verification.md)에 기록합니다.
+# assetflow
 # assetflow
