@@ -24,6 +24,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 실제 Spring Bean·보안 필터·JPA·Flyway를 함께 검증한다. HTTP 호출은 MockMvc로 처리한다.
+ * DB는 PostgreSQL 모드의 H2이므로 실제 PostgreSQL 및 브라우저 통합 검증과는 구분한다.
+ * 테스트 트랜잭션은 각 테스트 종료 후 롤백되어 다른 테스트에 회원 데이터가 남지 않는다.
+ */
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:auth;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.username=sa", "spring.datasource.password=",
@@ -147,6 +152,7 @@ class AuthIntegrationTest {
     }
 
     private MockHttpServletRequestBuilder withCsrf(MockHttpServletRequestBuilder request) throws Exception {
+        // 검증을 우회하는 모의 CSRF 값 대신 실제 발급 API의 쿠키·마스킹 토큰을 함께 돌려보낸다.
         MvcResult result = mvc.perform(get("/api/v1/auth/csrf")).andExpect(status().isOk()).andReturn();
         JsonNode body = json.readTree(result.getResponse().getContentAsString());
         String cookie = result.getResponse().getHeaders("Set-Cookie").stream().filter(value -> value.startsWith("XSRF-TOKEN=")).findFirst().orElseThrow();

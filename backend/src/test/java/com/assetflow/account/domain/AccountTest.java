@@ -7,6 +7,7 @@ import com.assetflow.member.domain.Member;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
+// 순수 Java 객체의 불변 조건을 검증한다. JPA 매핑이나 HTTP 검증은 이 테스트의 범위가 아니다.
 class AccountTest {
     @Test
     void createsAccountAndRenamesIt() {

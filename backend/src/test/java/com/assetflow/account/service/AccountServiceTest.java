@@ -20,6 +20,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * Spring 서버·실제 DB 없이 서비스의 분기와 DTO 변환을 검증한다.
+ * @Mock은 저장소 대역, @InjectMocks는 그 대역을 주입할 서비스다. SQL·트랜잭션 검증은 아니다.
+ */
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
     @Mock AccountRepository accounts;

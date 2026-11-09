@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.RestController;
 
+/** 모든 계좌 요청은 인증 필터 통과 후 실행되며, 회원 ID는 요청 JSON/query가 아닌 JWT에서 가져온다. */
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
@@ -27,6 +28,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountResponse> create(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody CreateAccountRequest request) {
         AccountResponse response = service.create(Long.valueOf(jwt.getSubject()), request);
+        // 생성은 201과 새 리소스의 Location으로 표현하고 Entity 대신 DTO를 반환한다.
         return ResponseEntity.created(URI.create("/api/v1/accounts/" + response.id())).body(response);
     }
 

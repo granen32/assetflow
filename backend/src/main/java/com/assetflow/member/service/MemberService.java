@@ -16,6 +16,8 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberResponse get(Long id) {
+        // 현재 HTTP 진입점은 /auth/me다. 이 메서드 자체가 호출자의 소유권을 검증하는 것은 아니다.
+        // Controller가 JWT에서 추출한 ID를 전달한다는 호출 경계를 함께 이해해야 한다.
         return MemberResponse.from(repository.findById(id)
                 .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다.")));
     }

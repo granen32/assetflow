@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/** 입력 검증·HTTP 상태·쿠키 설정을 연결한다. 비밀번호 판단은 AuthService에 위임한다. */
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -35,12 +36,15 @@ public class AuthController {
 
     @GetMapping("/csrf")
     public Map<String, String> csrf(CsrfToken token) {
+        // Spring Security가 요청에 연결한 CSRF 토큰이다. JWT와 목적·수명이 다른 값이다.
+        // 기본 요청 핸들러가 마스킹한 값을 FE에 주며 이후 변경 요청의 헤더로 돌려받는다.
         return Map.of("token", token.getToken(), "headerName", token.getHeaderName());
     }
 
     @PostMapping("/register")
     public ResponseEntity<MemberResponse> register(@Valid @RequestBody RegisterRequest request) {
         MemberResponse member = auth.register(request);
+        // 가입 성공 시 로그인 쿠키도 발급한다. 응답 본문에는 회원 DTO만 포함한다.
         return ResponseEntity.created(URI.create("/api/v1/auth/me"))
                 .header(HttpHeaders.SET_COOKIE, tokens.loginCookie(member.id()).toString()).body(member);
     }
@@ -58,6 +62,7 @@ public class AuthController {
 
     @GetMapping("/me")
     public MemberResponse me(@AuthenticationPrincipal Jwt jwt) {
+        // 쿠키의 문자열을 직접 믿지 않는다. 필터가 검증한 JWT의 subject로 현재 회원을 조회한다.
         return members.get(Long.valueOf(jwt.getSubject()));
     }
 }

@@ -81,6 +81,8 @@ cd frontend && npm run typecheck && npm run lint && npm run build
 ```
 
 ## 학습용 코드 읽는 순서
+
+전체 요청 흐름과 파일별 역할은 [백엔드 코드 해설](docs/backend-walkthrough.md)에 정리했습니다. 소스 안의 한국어 주석과 함께 읽습니다.
 1. `backend/src/main/java/com/assetflow/member/domain/Member.java`
 2. `backend/src/main/java/com/assetflow/member/service/MemberService.java`
 3. `backend/src/main/java/com/assetflow/account/service/AccountService.java`
