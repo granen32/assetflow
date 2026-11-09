@@ -1,8 +1,18 @@
 # 로컬 검증 기록
 
+## 최신: 공개용 소스 정리 (2026-11-09)
+
+- 환경변수 변형 파일·개인 키·로그·DB 파일·산출물 제외 규칙을 추가했다. `.env.example`은 유지한다.
+- 개인 PC 경로와 개인 라이브러리 파일 링크를 공개 문서에서 제거했다. backend/bin 27개는 Git 추적만 해제했으며 실제 파일은 보존했다.
+- `node scripts/check-public.mjs`: 현재 파일 64개, 바이너리 내용 제외 1개, 탐지 0, 종료 코드 0.
+- 임시 검사 입력으로 개인 경로와 고정 JWT 키가 검출되는 것을 확인했다. 임시 파일은 제거했다.
+- `node scripts/check-public.mjs --history`: 기존 이력에서 개인 경로 8건, 개인 링크 1건, 산출물 27건, noreply가 아닌 커밋 이메일 3건을 검출하여 종료 코드 1. 남은 이력이 있음을 올바르게 보고한 결과이며 해결 완료가 아니다.
+- ignore 적용과 diff 공백 검사를 확인했다. 애플리케이션 로직은 변경하지 않아 FE/BE 빌드·테스트는 다시 실행하지 않았다.
+- 커밋·푸시·로컬 Git 이력 초기화는 수행하지 않았다. 사용자의 원격 저장소 재생성 이후에도 로컬 기존 이력을 그대로 올리지 않도록 별도 처리가 필요하다. 안내는 `docs/public-release.md`에 있다.
+
 ## 최신: 사용자 공용 Java / Wrapper 설정 (2026-11-09)
 
-- 사용자 요청으로 검증된 JDK 21을 `C:\Users\권규형\.jdks\corretto-21.0.13_0`에 복사하고 사용자 JAVA_HOME/PATH에 등록했다. 기존 환경변수는 `.local-tools/java-env-backup.json`에 백업했다. 시스템 범위 환경변수와 기존 Java 설치는 변경하지 않았다.
+- 사용자 요청으로 검증된 JDK 21을 사용자 공용 JDK 폴더에 복사하고 사용자 JAVA_HOME/PATH에 등록했다. 기존 환경변수는 Git에서 제외한 `.local-tools/java-env-backup.json`에 백업했다. 시스템 범위 환경변수와 기존 Java 설치는 변경하지 않았다.
 - 영구 환경변수를 새 프로세스 환경에 적용해 `java -version`이 Java 21인 것을 확인했다. PATH의 기존 Oracle Java 21도 유지되며 Wrapper는 JAVA_HOME의 Corretto 21을 사용한다.
 - Gradle 8.14.3 Wrapper 4개 파일을 생성하고 배포 SHA256을 고정했다. 최초 Wrapper 다운로드도 완료했다.
 - `backend/gradle.properties`에 `-Dfile.encoding=COMPAT`을 설정했다. OS 기본 인코딩을 사용해 한글 사용자 경로의 worker 로드 오류를 방지한다. 소스 컴파일은 UTF-8을 유지한다.

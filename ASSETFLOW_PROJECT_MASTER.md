@@ -14,7 +14,7 @@
 - FE/BE 학습 투자: 백엔드 중심. FE는 기존 Next.js 경험 활용
 - 개발 방식: **PAIR** 기본, 핵심 Java 비즈니스 로직은 직접 이해·구현
 - 아키텍처: **모듈형 모놀리스** + 기능별 패키지
-- 로컬 작업 경로: `C:\Users\권규형\Desktop\work\assetflow`
+- 로컬 작업 경로: `C:\work\assetflow`
 - 레포지토리 이름: `assetflow`
 
 ### MVP 범위 및 우선순위
@@ -197,21 +197,21 @@ flowchart TD
 준비물: JDK 21, Gradle 8.14+, Node.js 22 LTS 권장, Docker Desktop.
 
 ```powershell
-cd C:\Users\권규형\Desktop\work\assetflow
+cd C:\work\assetflow
 docker compose up -d
 ```
 
 별도 터미널 (BE):
 
 ```powershell
-cd C:\Users\권규형\Desktop\work\assetflow\backend
+cd C:\work\assetflow\backend
 gradle bootRun
 ```
 
 별도 터미널 (FE):
 
 ```powershell
-cd C:\Users\권규형\Desktop\work\assetflow\frontend
+cd C:\work\assetflow\frontend
 npm install
 npm run dev
 ```
@@ -249,14 +249,14 @@ npm run build
 
 ## 10. Codex 인계 및 첫 작업
 
-1. 기존 [AssetFlow 전체 소스 ZIP](https://chatgpt.com/library?file_id=libfile_d79857ffe7548191afa8fddddd521c13&account_id=personal)을 내려받아 `C:\Users\권규형\Desktop\work\assetflow`에 해제.
+1. 프로젝트 소스를 로컬 작업 폴더에 준비한다. 기존 파일을 ZIP으로 덮어쓰지 않는다.
 2. 이 문서 및 `CODEX_HANDOFF.md`를 프로젝트 루트에 복사.
 3. Codex에서 **AssetFlow** 로컬 프로젝트를 만들고 해당 폴더를 primary root로 설정.
 4. 다음 프롬프트로 시작.
 
 ```text
 AssetFlow 프로젝트를 이어서 개발하려고 합니다.
-작업 루트는 C:\Users\권규형\Desktop\work\assetflow 입니다.
+작업 루트는 C:\work\assetflow 입니다.
 
 AGENTS.md, ASSETFLOW_PROJECT_MASTER.md, CODEX_HANDOFF.md,
 README.md 및 docs/*를 먼저 읽고 FE/BE/Harness 구조를 확인해 주세요.
