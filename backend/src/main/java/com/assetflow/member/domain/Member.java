@@ -43,6 +43,20 @@ public class Member {
         this.createdAt = Instant.now();
     }
 
+    public void changeNickname(String nickname) {
+        if(nickname == null || nickname.isBlank()) {
+            throw new IllegalArgumentException("닉네임을 입력해 주세요.");
+        }
+
+       String trimmedNickname = nickname.trim();
+
+        if(trimmedNickname.length() > 80) {
+            throw new IllegalArgumentException("닉네임은 최대 80자까지 가능합니다.");
+        }
+
+       this.nickname = trimmedNickname;
+    }
+
     public Long getId() { return id; }
     public String getEmail() { return email; }
     public String getNickname() { return nickname; }

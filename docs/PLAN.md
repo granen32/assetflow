@@ -23,3 +23,12 @@
 남은 검증: PostgreSQL 실DB 및 브라우저 FE↔BE 통합. 이전 검증 시 Docker가 없어 PostgreSQL을 실행하지 못했다. 이번 요청에서 Wrapper는 추가했으며 JAR 패키징은 수행하지 않았다. 다음에는 README의 환경변수를 설정하고 PostgreSQL을 준비한 뒤 가입 → 계좌 생성 → 로그아웃 → 다른 회원 접근 차단을 브라우저로 확인한다.
 
 거래·카테고리·월별 통계는 이번 범위에 포함하지 않는다. 인증 구현 파일은 `backend/src/main/java/com/assetflow/auth/`, V2 migration, 회원·계좌 DTO/Controller/Service, `frontend/src/app/page.tsx`, `frontend/src/lib/api.ts` 및 관련 문서다.
+
+## 닉네임 수정 — BE 학습 / FE 선구현
+
+- FE: 프로필 수정 모달, CSRF API 함수, 개발용 `/dev/profile` 미리보기 구현.
+- BE: 사용자 코드 보존. 개념 → 과제 → 사용자 구현 → 리뷰 순서.
+- 완료: MemberService.update에 사용자가 쓰기 트랜잭션 적용.
+- 다음 과제: MemberTest에 null, 80자, 81자 입력 테스트를 직접 작성한다.
+- 이후: 테스트 전체 트랜잭션 없이 서비스 호출 후 별도 트랜잭션에서 재조회해 저장을 확인한다. 이메일·비밀번호 해시 불변, 본인 수정·미인증·CSRF 누락을 검증한다.
+- 남은 검증: PostgreSQL 저장·재조회 및 브라우저 수정 후 새로고침 유지. 거래 설계는 후속 확정.

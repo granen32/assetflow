@@ -47,6 +47,7 @@ async function mutate<T>(path: string, method: "POST" | "PATCH", body?: unknown)
 }
 
 export const assetApi = {
+  updateNickname: (nickname: string) => mutate<Member>("/members/me", "PATCH", { nickname }),
   register: (email: string, nickname: string, password: string) =>
     mutate<Member>("/auth/register", "POST", { email, nickname, password }),
   login: (email: string, password: string) => mutate<Member>("/auth/login", "POST", { email, password }),

@@ -6,6 +6,8 @@ import com.assetflow.member.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.assetflow.member.domain.Member;
+import com.assetflow.member.dto.UpdateMemberRequest;
 
 @Service
 public class MemberService {
@@ -15,10 +17,22 @@ public class MemberService {
     public MemberService(MemberRepository repository) { this.repository = repository; }
 
     @Transactional(readOnly = true)
-    public MemberResponse get(Long id) {
+    public MemberResponse get(Long memberId) {
         // 현재 HTTP 진입점은 /auth/me다. 이 메서드 자체가 호출자의 소유권을 검증하는 것은 아니다.
         // Controller가 JWT에서 추출한 ID를 전달한다는 호출 경계를 함께 이해해야 한다.
-        return MemberResponse.from(repository.findById(id)
+        return MemberResponse.from(repository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다.")));
     }
+
+    @Transactional
+    public MemberResponse update(Long memberId, UpdateMemberRequest request) {
+        Member member = repository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."));
+
+        member.changeNickname(request.nickname());
+
+        return MemberResponse.from(member);
+    }
+    
+    
 }

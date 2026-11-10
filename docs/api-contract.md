@@ -54,3 +54,7 @@ Base path: `/api/v1`. 브라우저는 Next.js 동일 출처 프록시를 사용�
 - Java 금액은 BigDecimal, JSON은 number를 유지한다. FE의 큰 수 정밀도 보장은 후속 계약 설계가 필요하다.
 - `balance`는 현재 초기 잔액이다. 거래·통계·부채·저축 목표는 미구현이다.
 - HTTPS, 로그인 시도 제한, refresh/revocation 정책 등 외부 배포를 위한 검토는 남아 있다. 현재는 로컬 학습 환경이다.
+
+## 본인 닉네임 수정 (검증 진행 중)
+
+PATCH `/members/me`: `{nickname: string}` → 200 Member. JWT subject로 본인을 결정하며 CSRF가 필요하다. 입력은 공백 불가·최대 80자이며 저장 시 앞뒤 공백을 제거한다. 400/401/403/404는 기존 오류 계약을 따른다. Service에 쓰기 트랜잭션을 적용했으며 DB 영속화 및 API 통합 검증이 남아 있다.
