@@ -2,7 +2,10 @@
 .local-tools/
 build/
 .idea/
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/java-formatter.xml
+!.vscode/extensions.json
 *.iml
 .env
 .env.*
