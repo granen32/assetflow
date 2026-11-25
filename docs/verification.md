@@ -1,5 +1,14 @@
 # 로컬 검증 기록
 
+## 거래 테이블 누락으로 인한 bootRun 실패 수정 (2026-11-25)
+
+- 재현: Java 21 실행과 PostgreSQL 연결은 성공했으나 `Schema-validation: missing table [financial_transactions]`로 종료됐다.
+- 사용자 승인 후 V3 Flyway migration을 추가했다. 기존 Entity와 V1/V2는 수정하지 않았고 `ddl-auto=validate`를 유지했다.
+- 최초 `test`는 기존 main 컴파일 산출물 참조 오류로 실패했다. `./gradlew.bat clean test --console=plain`으로 재빌드한 결과 종료 코드 0, 테스트 14개 통과(실패·오류 0).
+- 실제 PostgreSQL에서 Flyway V3 성공, 테이블 생성 및 Hibernate 검증 통과를 확인했다. 적용 전후 회원 3건·계좌 0건으로 유지됐다.
+- `Started AssetFlowApplication`, 포트 8080 기동과 `GET /api/v1/auth/csrf` HTTP 200을 확인했다. 기동 검증에는 실행 프로세스에만 임시 JWT_SECRET을 설정했다. 재실행 시 README의 키 설정 절차가 필요하다.
+- 거래 API·브라우저 흐름은 이번 검증 범위에 포함하지 않았다.
+
 ## 닉네임 수정 실DB 재검증 (2026-11-10)
 
 - 사용자 백엔드 재기동 후 localhost:3000의 FE 프록시를 통해 CSRF 발급 → 테스트 회원 가입 → 닉네임 PATCH → GET /auth/me 재조회 성공.
